@@ -12,6 +12,7 @@
             --text-color: #333;
             --accent-color: #e74c3c;
         }
+
         body {
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background-color: var(--bg-color);
@@ -23,9 +24,283 @@
             align-items: center;
             min-height: 100vh;
         }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 600px;
+            padding: 20px 0;
+            flex-grow: 1;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: none; /* 初期は非表示 */
+            border-left: 8px solid var(--primary-color);
+        }
+
+        .step-card.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-number {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            margin: 0 0 15px 0;
+            font-size: 1.25rem;
+            line-height: 1.4;
+        }
+
+        .script-box {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 3px solid #ccc;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .play-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .play-btn:disabled {
+            background-color: #ccc;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .prev-btn {
+            background-color: #ddd;
+            color: #666;
+        }
+
+        .next-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .warning-text {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 16.6%;
+            transition: width 0.3s ease;
+        }
     </style>
 </head>
 <body>
-<header>冠動脈CT：造影剤説明ガイド</header>
+
+<header>
+    冠動脈CT：造影剤説明ガイド
+</header>
+
+<div class="container">
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="step-card active" id="step1">
+        <div class="step-number">STEP 1. 導入</div>
+        <h2>造影剤の使用について</h2>
+        <div class="script-box">
+            「これから、血管を詳しく映し出すための薬、『造影剤』を使用して検査を行います。準備を始めますね。」
+        </div>
+        <div class="audio-controls">
+            <button class="play-btn" onclick="playAudio('audio1')">▶ 音声を再生</button>
+            <audio id="audio1" src="path/to/audio1.mp3"></audio>
+        </div>
+    </div>
+
+    <div class="step-card" id="step2">
+        <div class="step-number">STEP 2. 目的</div>
+        <h2>検査の目的</h2>
+        <div class="script-box">
+            「この薬を使うことで、心臓の周りにある細い血管の形や、詰まっているところがないかをはっきりと確認することができます。」
+        </div>
+        <div class="audio-controls">
+            <button class="play-btn" onclick="playAudio('audio2')">▶ 音声を再生</button>
+            <audio id="audio2" src="path/to/audio2.mp3"></audio>
+        </div>
+    </div>
+
+    <div class="step-card" id="step3">
+        <div class="step-number">STEP 3. 処置</div>
+        <h2>ラインの接続</h2>
+        <div class="script-box">
+            「では、腕の点滴の針に、造影剤を入れるためのチューブを繋いでいきます。少し腕を動かさないようにしていてくださいね。」
+        </div>
+        <div class="audio-controls">
+            <button class="play-btn" onclick="playAudio('audio3')">▶ 音声を再生</button>
+            <audio id="audio3" src="path/to/audio3.mp3"></audio>
+        </div>
+    </div>
+
+    <div class="step-card" id="step4">
+        <div class="step-number">STEP 4. 感覚の説明</div>
+        <h2>注入時の感覚</h2>
+        <div class="script-box">
+            「薬が入る時、体がポワーっと熱く感じることがありますが、一時的なものですので心配いりません。喉のあたりが変な感じがすることもあります。」
+        </div>
+        <div class="audio-controls">
+            <button class="play-btn" onclick="playAudio('audio4')">▶ 音声を再生</button>
+            <audio id="audio4" src="path/to/audio4.mp3"></audio>
+        </div>
+    </div>
+
+    <div class="step-card" id="step5">
+        <div class="step-number">STEP 5. 安全確認</div>
+        <h2>異常の申告</h2>
+        <div class="script-box">
+            「もし、かゆみが出たり、気分が悪くなったり、息苦しさを感じたら、すぐにマイクやブザーでお知らせください。」
+        </div>
+        <span class="warning-text">※マイクの場所を指差しで示す</span>
+        <div class="audio-controls">
+            <button class="play-btn" onclick="playAudio('audio5')">▶ 音声を再生</button>
+            <audio id="audio5" src="path/to/audio5.mp3"></audio>
+        </div>
+    </div>
+
+    <div class="step-card" id="step6">
+        <div class="step-number">STEP 6. 最終確認</div>
+        <h2>静止の依頼</h2>
+        <div class="script-box">
+            「それでは検査を始めます。画像がボケてしまうので、検査中は体を動かさないようにお願いします。合図に合わせて息止めも頑張りましょう。」
+        </div>
+        <div class="audio-controls">
+            <button class="play-btn" onclick="playAudio('audio6')">▶ 音声を再生</button>
+            <audio id="audio6" src="path/to/audio6.mp3"></audio>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button class="nav-btn prev-btn" id="prevBtn" onclick="changeStep(-1)" disabled>戻る</button>
+        <button class="nav-btn next-btn" id="nextBtn" onclick="changeStep(1)">次へ</button>
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 6;
+
+    function changeStep(delta) {
+        // 現在のステップを非表示
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+
+        // ステップを更新
+        currentStep += delta;
+        if (currentStep < 1) currentStep = 1;
+        if (currentStep > totalSteps) currentStep = totalSteps;
+
+        // 新しいステップを表示
+        document.getElementById(`step${currentStep}`).classList.add('active');
+
+        // ボタンの制御
+        document.getElementById('prevBtn').disabled = (currentStep === 1);
+        if (currentStep === totalSteps) {
+            document.getElementById('nextBtn').innerText = '完了';
+            document.getElementById('nextBtn').style.backgroundColor = '#27ae60';
+        } else {
+            document.getElementById('nextBtn').innerText = '次へ';
+            document.getElementById('nextBtn').style.backgroundColor = '';
+        }
+
+        // プログレスバーの更新
+        const progress = (currentStep / totalSteps) * 100;
+        document.getElementById('progress-fill').style.width = `${progress}%`;
+
+        // ステップ切り替え時に音声を停止
+        const audios = document.querySelectorAll('audio');
+        audios.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+    }
+
+    function playAudio(audioId) {
+        const audio = document.getElementById(audioId);
+        if (audio.src.includes('path/to/')) {
+            alert('音声ファイルが設定されていません。台本を読み上げてください。');
+            console.log("Audio file missing for:", audioId);
+            return;
+        }
+        audio.play();
+    }
+</script>
+
 </body>
 </html>
